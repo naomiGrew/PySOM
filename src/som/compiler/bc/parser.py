@@ -1,6 +1,7 @@
 from som.compiler.bc.bytecode_generator import (
     emit_inc,
     emit_dec,
+    emit_add,
     emit_dup,
     emit_pop,
     emit_send,
@@ -221,6 +222,14 @@ class Parser(ParserBase):
                     emit_dec(mgenc)
                 return True
         return False
+    
+    def _try_add_bytecode(self, mgenc):
+        if self._sym == Symbol.Integer and self._text != "1":
+            self._expect(Symbol.Integer)
+            #may need a self.expect
+            emit_add(mgenc)
+            return True
+        return False
 
     def _binary_message(self, mgenc):
         is_super_send = self._super_send
@@ -240,7 +249,9 @@ class Parser(ParserBase):
             and mgenc.inline_andor(self, False)
         ):
             return
-
+        if not is_super_send and msg.get_embedded_string() == "+":
+            self._try_add_bytecode(mgenc)
+            return
         if is_super_send:
             emit_super_send(mgenc, msg)
         else:
