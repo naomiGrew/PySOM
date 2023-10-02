@@ -93,8 +93,12 @@ class Bytecodes(object):
     push_argument = push_local + 1
     pop_local = push_argument + 1
     pop_argument = pop_local + 1
+    add = pop_argument + 1
 
-    invalid = pop_argument + 1
+    invalid = add + 1
+
+    
+ 
 
 
 def is_one_of(bytecode, candidates):
@@ -104,7 +108,7 @@ def is_one_of(bytecode, candidates):
     return False
 
 
-_NUM_BYTECODES = Bytecodes.pop_argument + 1
+_NUM_BYTECODES = Bytecodes.invalid
 
 POP_X_BYTECODES = [
     Bytecodes.pop_local,
@@ -267,6 +271,7 @@ _BYTECODE_LENGTH = [
     3,  # push_argument
     3,  # pop_local
     3,  # pop_argument
+    1,  # add maybe needs changing to 5
 ]
 
 
