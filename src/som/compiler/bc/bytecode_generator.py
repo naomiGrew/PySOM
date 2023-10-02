@@ -10,6 +10,8 @@ def emit_inc(mgenc):
 def emit_dec(mgenc):
     emit1(mgenc, BC.dec, 0)
 
+def emit_add(mgenc):
+    emit1(mgenc, BC.add, 0)
 
 def emit_inc_field_push(mgenc, field_idx, ctx_level):
     emit3(mgenc, BC.inc_field_push, field_idx, ctx_level, 1)
