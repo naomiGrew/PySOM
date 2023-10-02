@@ -464,6 +464,16 @@ def interpret(method, frame, max_stack_size):
             else:
                 return _not_yet_implemented()
             stack[stack_ptr] = result
+            
+        elif bytecode == Bytecodes.add:
+            from som.vmobjects.integer import Integer
+            right_val = stack[stack_ptr]
+            left_val = stack[stack_ptr - 1]
+            result = left_val + right_val
+            #Update stack
+            stack[stack_ptr - 1] = result
+            #Get the stack pointer to point at result
+            stack_ptr -= 1
 
         elif bytecode == Bytecodes.dec:
             val = stack[stack_ptr]
